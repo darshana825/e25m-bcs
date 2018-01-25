@@ -584,3 +584,110 @@ require get_parent_theme_file_path( '/inc/customizer.php' );
  * SVG icons functions and filters.
  */
 require get_parent_theme_file_path( '/inc/icon-functions.php' );
+
+
+/* himas over write grativity form*/
+
+add_filter( 'gform_pre_render_1', 'populate_posts' );
+add_filter( 'gform_pre_validation_1', 'populate_posts' );
+add_filter( 'gform_pre_submission_filter_1', 'populate_posts' );
+add_filter( 'gform_admin_pre_render_1', 'populate_posts' );
+function populate_posts( $form ) {
+ 
+    foreach ( $form['fields'] as &$field ) {
+ 
+        if ( $field->type != 'select' || strpos( $field->cssClass, 'populate-posts' ) === false ) {
+            continue;
+        }
+ 
+        // you can add additional parameters here to alter the posts that are retrieved
+        // more info: http://codex.wordpress.org/Template_Tags/get_posts
+        //$posts = get_posts( 'numberposts=-1&post_status=publish' );
+        
+        $args = array( 'post_type' => 'projects', 'posts_per_page' => 10 );
+        $posts = new WP_Query( $args );
+        $choices = array();
+        while ( $posts->have_posts() ) : $posts->the_post();
+            
+             $choices[] = array( 'text' => get_the_title(), 'value' => get_the_title());
+        
+         endwhile;
+        
+        
+ 
+//        foreach ( $posts as $post ) {
+//            $choices[] = array( 'text' => $post->post_title, 'value' => $post->post_title );
+//        }
+ 
+        // update 'Select a Post' to whatever you'd like the instructive option to be
+        $field->placeholder = 'Select a Post';
+        $field->choices = $choices;
+ 
+    }
+ 
+    return $form;
+}
+
+/* himas save grativity form data to custom table */
+add_action('gform_after_submission', 'endo_add_entry_to_db', 10, 2);
+function endo_add_entry_to_db($entry, $form) {
+
+	  // uncomment to see the entry object 
+//	   echo '<pre>';
+//	   var_dump($entry);
+//	   echo '</pre>';
+//exit();
+  	//$source = $entry['source_url'];
+  
+	  $date = 	$entry[1];
+	  $amount = 	$entry[2];
+	  $project = 	$entry[9];
+          $description = $entry[3];
+          $typeF = 	$entry['10.1'];
+          $typeT = 	$entry['10.2'];
+          $others = 	$entry[7];
+          $attachments = $entry[8];
+          $attachments = stripslashes($attachments);
+          $attachments = json_decode($attachments, true); //var_dump($attachments);
+          
+          $type = $typeF.",".$typeT;
+
+  	global $wpdb;
+  
+  	// add form data to custom database table
+	$wpdb->insert(
+	    'add_claim',
+	    array(
+	      'date' => $date,
+	      'amount' => $amount,
+	      'description' => $description,
+	      'type' => $type,
+	      'project' => $project,
+              'others' => $others,
+              'status' => 0
+	    )
+	);
+        
+        $insertId = $wpdb->insert_id;
+
+        foreach ($attachments as $attachment){           // echo $attachment;
+            $wpdb->insert(
+	    'add_claim_attachments',
+                array(
+                  'cid' => $insertId,
+                  'file' => $attachment,
+                  'status' => 1
+                ),
+                array(
+                    '%d',
+                    '%s',
+                    '%d'
+                )
+            );
+            $i++;
+        }
+
+      //echo "aaa".$wpdb->print_error();
+       // echo $wpdb->insert_id;
+
+}

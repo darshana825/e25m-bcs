@@ -658,13 +658,14 @@ function endo_add_entry_to_db($entry, $form) {
 	$wpdb->insert(
 	    'add_claim',
 	    array(
+              'uid' => get_current_user_id(),
 	      'date' => $date,
 	      'amount' => $amount,
 	      'description' => $description,
 	      'type' => $type,
 	      'project' => $project,
               'others' => $others,
-              'status' => 0
+              'status' => 1
 	    )
 	);
         

@@ -27,23 +27,194 @@ get_header(); ?>
 //				endif;
 ?>
                     
-                    <h1>Dashboard</h1>
+                    
                     <div class="mainWrapper">
                         <div class="linkWrapper">
                             Your Login as a <?php echo esc_html( $current_user->user_firstname ); ?> , <a href="<?php echo site_url('dashboard');?>">Dashboard</a>, <a href="<?php echo site_url('your-profile');?>">My Profile</a> , <a href="<?php echo site_url('add-claim'); ?>">Apply Claim</a>, <a href="<?php echo site_url('logout');?>">Logout</a>
                         </div>
+                        <h1>Dashboard</h1>
                         <div class="bodyWrapper">
                             <div>
                                 <h2>Pending Claim</h2>
-                                <ul>
-                                    <li></li>
-                                </ul>
+                                <table style="width:100%;">
+                                    <tr>
+                                        <th></th>
+                                        <th style="text-align:left;  height: 45px;">UserName</th>
+                                        <th style="text-align:left">User Email</th> 
+                                        <th style="text-align:left">Date</th>
+                                        <th>Amount</th>
+                                        <th>Description</th>
+                                        <th>Type</th>
+                                        <th>Project Details</th>
+                                        <th>Other Employee's</th>
+                                        <th>Bill Attachment's</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    <?php
+                                  //  echo "SELECT * FROM add_claim WHERE uid='".$current_user->ID."' AND status NOT IN (0,4)";
+                                    $i=1;
+                                     $claims = $wpdb->get_results( "SELECT * FROM add_claim WHERE uid='".$current_user->ID."' AND status NOT IN (0,4)" );
+                                    foreach ($claims as $claim) {
+                                        $getUser = $wpdb->get_row("SELECT * FROM wp_users WHERE ID =" . $claim->uid);
+            
+                                        $customPostTitle = get_page_by_title($claim->project, OBJECT, 'projects');
+                                      //  echo $customPostTitle->ID
+
+                                        $getAttachments = $wpdb->get_results("SELECT * FROM add_claim_attachments WHERE status=1 AND cid =" . $claim->id);
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $i; ?>.)</td>
+                                        <td style="text-align:left; height:40px;"><?php echo $getUser->user_login; ?></td>
+                                        <td style="text-align:left"><?php echo $getUser->user_email; ?></td> 
+                                        <td style="text-align:left"><?php echo $claim->date; ?></td>
+                                        <td style="text-align:left"><?php echo "LKR ".$claim->amount; ?></td>
+                                        <td style="text-align:left"><?php echo $claim->description; ?></td>
+                                        <td style="text-align:left"><?php echo $claim->type; ?></td>
+                                        <td style="text-align:left"><?php echo $claim->project." (";  echo get_the_category( $customPostTitle->ID )[0]->name.")"; ?></td>
+                                        <td style="text-align:left"><?php echo $claim->others ?></td>
+                                        <td style="text-align:left">
+                                            <ul>
+                                                <?php
+                                                $v=1;
+                                                  foreach ($getAttachments as $getAttachment){
+                                                ?>
+                                                <li><a href="<?php echo $getAttachment->file; ?>" target="_blank">Attachment <?php echo $v; ?></a></li>
+                                                  <?php $v++; } ?>
+                                            </ul>
+                                        </td>
+                                        <td style="text-align:left">
+                                            <a class="statusBtn">View Status</a>
+                                            <?php
+                                            $pmSts = "";
+                                            $hodSts = "";
+                                            $accSts = "";
+                                            if($claim->status==1){
+                                                $pmSts = "Pending"; $hodSts="Pending"; $accSts="Pending";
+                                            }else if($claim->status==2){
+                                                $pmSts = "Approved"; $hodSts="Pending"; $accSts="Pending";
+                                            }else if($claim->status==3){
+                                                $pmSts = "Approved"; $hodSts="Approved"; $accSts="Pending";
+                                            }else if($claim->status==4){
+                                                $pmSts = "Approved"; $hodSts="Approved"; $accSts="Approved";
+                                            }
+                                            ?>
+                                            <div id="<?php echo $i; ?>">
+                                                <div>Project Manager - <?php echo $pmSts; ?></div>
+                                                <div>Head of Delivery - <?php echo $hodSts; ?></div>
+                                                <div>Accountant - <?php echo $accSts; ?></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php $i++;
+                                    }
+                                    ?>
+                                </table>
                             </div>
                             <div>
                                 <h2>Approved Claim</h2>
-                                <ul>
-                                    <li></li>
-                                </ul>
+                                <table style="width:100%;">
+                                    <tr>
+                                        <th></th>
+                                        <th style="text-align:left;  height: 45px;">UserName</th>
+                                        <th style="text-align:left">User Email</th> 
+                                        <th style="text-align:left">Date</th>
+                                        <th>Amount</th>
+                                        <th>Description</th>
+                                        <th>Type</th>
+                                        <th>Project Details</th>
+                                        <th>Other Employee's</th>
+                                        <th>Bill Attachment's</th>
+                                    </tr>
+                                    <?php
+                                  //  echo "SELECT * FROM add_claim WHERE uid='".$current_user->ID."' AND status NOT IN (0,4)";
+                                    $i=1;
+                                     $claims = $wpdb->get_results( "SELECT * FROM add_claim WHERE uid='".$current_user->ID."' AND status=4" );
+                                    foreach ($claims as $claim) {
+                                        $getUser = $wpdb->get_row("SELECT * FROM wp_users WHERE ID =" . $claim->uid);
+            
+                                        $customPostTitle = get_page_by_title($claim->project, OBJECT, 'projects');
+                                      //  echo $customPostTitle->ID
+
+                                        $getAttachments = $wpdb->get_results("SELECT * FROM add_claim_attachments WHERE status=1 AND cid =" . $claim->id);
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $i; ?>.)</td>
+                                        <td style="text-align:left; height:40px;"><?php echo $getUser->user_login; ?></td>
+                                        <td style="text-align:left"><?php echo $getUser->user_email; ?></td> 
+                                        <td style="text-align:left"><?php echo $claim->date; ?></td>
+                                        <td style="text-align:left"><?php echo "LKR ".$claim->amount; ?></td>
+                                        <td style="text-align:left"><?php echo $claim->description; ?></td>
+                                        <td style="text-align:left"><?php echo $claim->type; ?></td>
+                                        <td style="text-align:left"><?php echo $claim->project." (";  echo get_the_category( $customPostTitle->ID )[0]->name.")"; ?></td>
+                                        <td style="text-align:left"><?php echo $claim->others ?></td>
+                                        <td style="text-align:left">
+                                            <ul>
+                                                <?php
+                                                $v=1;
+                                                  foreach ($getAttachments as $getAttachment){
+                                                ?>
+                                                <li><a href="<?php echo $getAttachment->file; ?>" target="_blank">Attachment <?php echo $v; ?></a></li>
+                                                  <?php $v++; } ?>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <?php $i++;
+                                    }
+                                    ?>
+                                </table>
+                            </div>
+                            <div>
+                                <h2>Canceled Claim</h2>
+                                <table style="width:100%;">
+                                    <tr>
+                                        <th></th>
+                                        <th style="text-align:left;  height: 45px;">UserName</th>
+                                        <th style="text-align:left">User Email</th> 
+                                        <th style="text-align:left">Date</th>
+                                        <th>Amount</th>
+                                        <th>Description</th>
+                                        <th>Type</th>
+                                        <th>Project Details</th>
+                                        <th>Other Employee's</th>
+                                        <th>Bill Attachment's</th>
+                                    </tr>
+                                    <?php
+                                  //  echo "SELECT * FROM add_claim WHERE uid='".$current_user->ID."' AND status NOT IN (0,4)";
+                                    $i=1;
+                                     $claims = $wpdb->get_results( "SELECT * FROM add_claim WHERE uid='".$current_user->ID."' AND status=0" );
+                                    foreach ($claims as $claim) {
+                                        $getUser = $wpdb->get_row("SELECT * FROM wp_users WHERE ID =" . $claim->uid);
+            
+                                        $customPostTitle = get_page_by_title($claim->project, OBJECT, 'projects');
+                                      //  echo $customPostTitle->ID
+
+                                        $getAttachments = $wpdb->get_results("SELECT * FROM add_claim_attachments WHERE status=1 AND cid =" . $claim->id);
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $i; ?>.)</td>
+                                        <td style="text-align:left; height:40px;"><?php echo $getUser->user_login; ?></td>
+                                        <td style="text-align:left"><?php echo $getUser->user_email; ?></td> 
+                                        <td style="text-align:left"><?php echo $claim->date; ?></td>
+                                        <td style="text-align:left"><?php echo "LKR ".$claim->amount; ?></td>
+                                        <td style="text-align:left"><?php echo $claim->description; ?></td>
+                                        <td style="text-align:left"><?php echo $claim->type; ?></td>
+                                        <td style="text-align:left"><?php echo $claim->project." (";  echo get_the_category( $customPostTitle->ID )[0]->name.")"; ?></td>
+                                        <td style="text-align:left"><?php echo $claim->others ?></td>
+                                        <td style="text-align:left">
+                                            <ul>
+                                                <?php
+                                                $v=1;
+                                                  foreach ($getAttachments as $getAttachment){
+                                                ?>
+                                                <li><a href="<?php echo $getAttachment->file; ?>" target="_blank">Attachment <?php echo $v; ?></a></li>
+                                                  <?php $v++; } ?>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <?php $i++;
+                                    }
+                                    ?>
+                                </table>
                             </div>
                         </div>
                     </div>

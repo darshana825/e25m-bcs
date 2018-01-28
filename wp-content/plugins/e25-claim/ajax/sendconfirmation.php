@@ -4,6 +4,31 @@ global $wpdb;
 
 $typ = $_POST['typ'];
 $id = $_POST['id'];
+$cUserStsId = $_POST['cUserStsId'];
+
+if($typ=="approval"){
+    $wpdb->update( 
+	'add_claim', 
+	array( 
+		'status' => $cUserStsId	// integer (number) 
+	), 
+	array( 'id' => $id ), 
+	array( 
+		'%d'	// value2
+	), 
+	array( '%d' ) 
+    );
+    
+    if($cUserStsId==4){ //if accountant approved email will send to user
+        $claims = $wpdb->get_row( "SELECT * FROM add_claim WHERE id=" . $id );
+        $currentUDeatils = $wpdb->get_row("SELECT * FROM wp_users WHERE ID =" . $claims->uid);
+        if($currentUDeatils->user_email){
+            userNotifyEmail('approval' , $currentUDeatils->user_email);
+        }
+        echo $cUserStsId;
+    }
+    
+}
 
 if($typ=="cancel"){
     
@@ -31,12 +56,13 @@ if($typ=="cancel"){
 	array( '%d' ) 
     );
     
-    $currentUDeatils = $wpdb->get_row("SELECT * FROM wp_users WHERE ID =" . $id);
+    
+    $claims = $wpdb->get_row( "SELECT * FROM add_claim WHERE id=" . $id );
+    $currentUDeatils = $wpdb->get_row("SELECT * FROM wp_users WHERE ID =" . $claims->uid);
     if($currentUDeatils->user_email){
         userNotifyEmail('cancel' , $currentUDeatils->user_email);
     }   
 }
-     
 
 
 /* user notification email*/
@@ -46,14 +72,17 @@ function userNotifyEmail($ref , $email){
     $subject ="";
 
     if($ref=="cancel"){
-        $subject = "Claim Status";
-        $message = "Sorry!, Your Claim is cancelled, Please refer your dashboard";
+        $subject = "Claim Cancelled";
+        $message = "Sorry!, Your Claim is cancelled, Please refer your dashboard to more details";
     }
-
-
+    
+    if($ref=="approval"){
+        $subject = "Claim Approved";
+        $message = "Your Claim is approved, Please refer your dashboard to more details";
+    }
+    
 
     wp_mail($email, $subject, $message);
-
 
 }
 

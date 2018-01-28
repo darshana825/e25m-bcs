@@ -53,15 +53,19 @@ function app_init() {
 
         <?php
         /* user status : "1" waiting for PM approval, "2" waiting for HOD approval, "3" waiting for Accountant approval */
-
+        $cUserStsId = "";
         if( current_user_can('administrator')){
             $claims = $wpdb->get_results( "SELECT * FROM add_claim WHERE status!=0" );
+            $cUserStsId = 1;
         } else if( current_user_can('editor')) {
             $claims = $wpdb->get_results( "SELECT * FROM add_claim WHERE status=2" );
+            $cUserStsId = 3;
         } else if( current_user_can('author')) {
             $claims = $wpdb->get_results( "SELECT * FROM add_claim WHERE status=1" );
+            $cUserStsId = 2;
         }else if( current_user_can('contributor')) {
-            $claims = $wpdb->get_results( "SELECT * FROM add_claim WHERE status=3" );
+            $claims = $wpdb->get_results( "SELECT * FROM add_claim WHERE status IN (3,4)" );
+            $cUserStsId = 4;
         }
         
         $i = 1;
@@ -96,7 +100,7 @@ function app_init() {
                           <?php $v++; } ?>
                     </ul>
                 </td>
-                <td style="text-align:left"><a class="appBtn">Approved</a> <a onclick="return confirm_cancel('<?php echo $claim->id; ?>')" class="canBtn">Cancel</a></td>
+                <td style="text-align:left"><a onclick="return confirm_approval('<?php echo $claim->id; ?>')" class="appBtn">Approved</a> <a onclick="return confirm_cancel('<?php echo $claim->id; ?>')" class="canBtn">Cancel</a></td>
             </tr>
 
             <?php $i++;
@@ -105,7 +109,32 @@ function app_init() {
 
     </table>
 <script>
+    
+// approve cliam
+function confirm_approval(cid){
+    var conf = confirm('are you sure?');
+    if(conf){
+        id = cid;
+        jQuery.ajax({
+            url:"<?php echo get_site_url(); ?>/wp-content/plugins/e25-claim/ajax/sendconfirmation.php",
+            type:'post',  
+            dataType: 'text',            
 
+            data: {id:id,typ:'approval',cUserStsId:'<?php echo $cUserStsId; ?>'},
+            success:function(results)
+            {  
+               // alert(results);
+                if(results==4){
+                    alert('Email Sent Successfully');
+                }
+                location.reload(); 
+            }
+        });  
+    } 
+}
+    
+    
+// cancel claim
 function confirm_cancel(cid){
     var conf = confirm('are you sure?');
     if(conf){

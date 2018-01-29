@@ -692,3 +692,16 @@ function endo_add_entry_to_db($entry, $form) {
        // echo $wpdb->insert_id;
 
 }
+
+//add_action( 'phpmailer_init', 'configure_smtp' );
+//function configure_smtp( PHPMailer $phpmailer ){
+//    $phpmailer->isSMTP(); //switch to smtp
+//    $phpmailer->Host = 'smtp.gmail.com';
+//    $phpmailer->SMTPAuth = true;
+//    $phpmailer->Port = 587;
+//    $phpmailer->Username = 'e25m.sl@gmail.com';
+//    $phpmailer->Password = 'Cute1005';
+//    $phpmailer->SMTPSecure = false;
+//    $phpmailer->From = 'himas@eight25media.com';
+//    $phpmailer->FromName='E25 Bill Claim System';
+//}

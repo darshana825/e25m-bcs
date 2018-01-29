@@ -10,5 +10,5 @@
 
 ?>
 <div class="site-info">
-<!--    <p>E25M BILL CLAIMING SYSTEM</p>-->
+   <p>E25 BILL CLAIMING SYSTEM</p>
 </div><!-- .site-info -->

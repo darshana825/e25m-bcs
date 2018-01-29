@@ -35,22 +35,23 @@ function app_init() {
     $urlpath = plugins_url() . '/tfkapp/tfkappajax/uploads/acheckerpdf/';
     ?>
 
-    <table style="width:100%;">
+    <table style="width:100%;" class="widefat fixed" cellspacing="0">
+        <thead>
         <tr>
-            <th></th>
-            <th style="text-align:left;  height: 45px;">UserName</th>
-            <th style="text-align:left">User Email</th> 
-            <th style="text-align:left">Date</th>
-            <th>Amount</th>
-            <th>Description</th>
-            <th>Type</th>
-            <th>Project Details</th>
-            <th>Other Employee's</th>
-            <th>Bill Attachment's</th>
-            <th>Status</th>
+            <th class="manage-column num"></th>
+            <th class="manage-column" style="text-align:left;  height: 45px;">UserName</th>
+            <th class="manage-column" style="text-align:left">User Email</th> 
+            <th class="manage-column" style="text-align:left">Date</th>
+            <th class="manage-column">Amount</th>
+            <th class="manage-column">Description</th>
+            <th class="manage-column">Type</th>
+            <th class="manage-column">Project Details</th>
+            <th class="manage-column">Other Employee's</th>
+            <th class="manage-column">Bill Attachment's</th>
+            <th class="manage-column">Status</th>
         </tr>
-
-
+</thead>
+<tbody>
         <?php
         /* user status : "1" waiting for PM approval, "2" waiting for HOD approval, "3" waiting for Accountant approval */
         $cUserStsId = "";
@@ -100,16 +101,46 @@ function app_init() {
                           <?php $v++; } ?>
                     </ul>
                 </td>
-                <td style="text-align:left"><a onclick="return confirm_approval('<?php echo $claim->id; ?>')" class="appBtn">Approved</a> <a onclick="return confirm_cancel('<?php echo $claim->id; ?>')" class="canBtn">Cancel</a></td>
+                <td style="text-align:left">
+                    <?php if($claim->status==4){ ?>
+                    <a class="appBtn">Approved</a>
+                    <a onclick="printDiv('printableArea')" >Print</a>
+                    <?php }else{ ?>
+                    <a onclick="return confirm_approval('<?php echo $claim->id; ?>')" class="appBtn">Approve</a> 
+                    <a onclick="return confirm_cancel('<?php echo $claim->id; ?>')" class="canBtn">Cancel</a>
+                    <?php } ?>
+                </td>
             </tr>
-
+            <div id="printableArea" style="display: none;">
+                <h1>E25 Bill Claiming System</h1>
+                <ul>
+                    <li>Email : <?php echo $getUser->user_email; ?></li>
+                    <li>Date : <?php echo $claim->date; ?></li>
+                    <li>Amount : <?php echo "LKR ".$claim->amount; ?></li>
+                    <li>Description : <?php echo $claim->description; ?></li>
+                    <li>Type : <?php echo $claim->type; ?></li>
+                    <li>Project Details : <?php echo $claim->project." (";  echo get_the_category( $customPostTitle->ID )[0]->name.")"; ?></li>
+                    <li>Other Employee's : <?php echo $claim->others; ?></li>
+                </ul>
+            </div>
             <?php $i++;
         }
         ?>
-
+</tbody>
     </table>
 <script>
-    
+// print cliam 
+function printDiv(divName) {
+     var printContents = document.getElementById(divName).innerHTML;
+     var originalContents = document.body.innerHTML;
+
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;
+}
+
 // approve cliam
 function confirm_approval(cid){
     var conf = confirm('are you sure?');

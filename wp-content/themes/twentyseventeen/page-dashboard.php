@@ -30,7 +30,7 @@ get_header(); ?>
                     
                     <div class="mainWrapper">
                         <div class="linkWrapper">
-                            Your Login as a <?php echo esc_html( $current_user->user_firstname ); ?> , <a href="<?php echo site_url('dashboard');?>">Dashboard</a>, <a href="<?php echo site_url('your-profile');?>">My Profile</a> , <a href="<?php echo site_url('add-claim'); ?>">Apply Claim</a>, <a href="<?php echo site_url('logout');?>">Logout</a>
+                            Your Login as a <b><?php echo esc_html( $current_user->user_firstname ); ?></b> , <a class="currentPage" href="<?php echo site_url('dashboard');?>">Dashboard</a>, <a href="<?php echo site_url('your-profile');?>">My Profile</a> , <a href="<?php echo site_url('add-claim'); ?>">Apply Claim</a>, <a href="<?php echo site_url('logout');?>">Logout</a>
                         </div>
                         <h1>Dashboard</h1>
                         <div class="bodyWrapper">
@@ -83,7 +83,8 @@ get_header(); ?>
                                             </ul>
                                         </td>
                                         <td style="text-align:left">
-                                            <a class="statusBtn">View Status</a>
+					<div class="viewSts">
+                                            <a class="statusBtn" data-target="#Modal_<?php echo $i; ?>" data-toggle="modal">View</a>
                                             <?php
                                             $pmSts = "";
                                             $hodSts = "";
@@ -98,11 +99,12 @@ get_header(); ?>
                                                 $pmSts = "Approved"; $hodSts="Approved"; $accSts="Approved";
                                             }
                                             ?>
-                                            <div id="<?php echo $i; ?>">
+                                            <div class="statusView modal fade" id="Modal_<?php echo $i; ?>">
                                                 <div>Project Manager - <?php echo $pmSts; ?></div>
                                                 <div>Head of Delivery - <?php echo $hodSts; ?></div>
                                                 <div>Accountant - <?php echo $accSts; ?></div>
                                             </div>
+					</div>
                                         </td>
                                     </tr>
                                     <?php $i++;
@@ -124,6 +126,7 @@ get_header(); ?>
                                         <th>Project Details</th>
                                         <th>Other Employee's</th>
                                         <th>Bill Attachment's</th>
+                                        <th>Status</th>
                                     </tr>
                                     <?php
                                   //  echo "SELECT * FROM add_claim WHERE uid='".$current_user->ID."' AND status NOT IN (0,4)";
@@ -158,6 +161,7 @@ get_header(); ?>
                                             </ul>
                                         </td>
                                     </tr>
+                                    <td style="text-align:left"><a>Approved</a></td>
                                     <?php $i++;
                                     }
                                     ?>
@@ -177,6 +181,7 @@ get_header(); ?>
                                         <th>Project Details</th>
                                         <th>Other Employee's</th>
                                         <th>Bill Attachment's</th>
+                                        <th>Status</th>
                                     </tr>
                                     <?php
                                   //  echo "SELECT * FROM add_claim WHERE uid='".$current_user->ID."' AND status NOT IN (0,4)";
@@ -210,6 +215,7 @@ get_header(); ?>
                                                   <?php $v++; } ?>
                                             </ul>
                                         </td>
+                                        <td style="text-align:left"><a>Cancelled</a></td>
                                     </tr>
                                     <?php $i++;
                                     }

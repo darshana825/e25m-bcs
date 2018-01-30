@@ -620,7 +620,7 @@ function populate_posts( $form ) {
 //        }
  
         // update 'Select a Post' to whatever you'd like the instructive option to be
-        $field->placeholder = 'Select a Post';
+        $field->placeholder = 'Select a Project';
         $field->choices = $choices;
  
     }
@@ -693,15 +693,41 @@ function endo_add_entry_to_db($entry, $form) {
 
 }
 
-//add_action( 'phpmailer_init', 'configure_smtp' );
-//function configure_smtp( PHPMailer $phpmailer ){
-//    $phpmailer->isSMTP(); //switch to smtp
-//    $phpmailer->Host = 'smtp.gmail.com';
-//    $phpmailer->SMTPAuth = true;
-//    $phpmailer->Port = 587;
-//    $phpmailer->Username = 'e25m.sl@gmail.com';
-//    $phpmailer->Password = 'Cute1005';
-//    $phpmailer->SMTPSecure = false;
-//    $phpmailer->From = 'himas@eight25media.com';
-//    $phpmailer->FromName='E25 Bill Claim System';
-//}
+function revcon_change_cat_label() {
+    global $submenu;
+    $submenu['edit.php'][15][0] = 'Project Managers'; // Rename categories to Project Managers
+}
+add_action( 'admin_menu', 'revcon_change_cat_label' );
+
+function revcon_change_cat_object() {
+    global $wp_taxonomies;
+    $labels = &$wp_taxonomies['category']->labels;
+    $labels->name = 'Project Managers';
+    $labels->singular_name = 'Project Manager';
+    $labels->add_new = 'Add Project Manager';
+    $labels->add_new_item = 'Add Project Manager';
+    $labels->edit_item = 'Edit Project Manager';
+    $labels->new_item = 'Project Manager';
+    $labels->view_item = 'View Project Manager';
+    $labels->search_items = 'Search Project Manager';
+    $labels->not_found = 'No Project Managers found';
+    $labels->not_found_in_trash = 'No Project Managers found in Trash';
+    $labels->all_items = 'All Project Managers';
+    $labels->menu_name = 'Project Manager';
+    $labels->name_admin_bar = 'Project Manager';
+}
+add_action( 'init', 'revcon_change_cat_object' );
+
+
+add_action( 'phpmailer_init', 'configure_smtp' );
+function configure_smtp( PHPMailer $phpmailer ){
+    $phpmailer->isSMTP(); //switch to smtp
+    $phpmailer->Host = 'smtp.gmail.com';
+    $phpmailer->SMTPAuth = true;
+    $phpmailer->Port = 587;
+    $phpmailer->Username = 'e25m.sl@gmail.com';
+    $phpmailer->Password = 'Cute1005';
+    $phpmailer->SMTPSecure = false;
+    $phpmailer->From = 'e25claim@eight25media.com';
+    $phpmailer->FromName='E25 Bill Claim System';
+}

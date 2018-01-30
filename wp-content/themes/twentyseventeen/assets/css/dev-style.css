@@ -1,3 +1,6 @@
+a:hover{
+	text-decoration: none !important;
+}
 .menu-scroll-down{
 	display: none !important;
 }
@@ -10,7 +13,10 @@
 	color: #fff;
 }
 .site-title a{
-	color: #fff;	
+	color: #fff;
+}
+.site-title a:hover{
+	text-decoration: none;
 }
 .site-footer{
 	background-color: #243A48;
@@ -67,7 +73,8 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 select{
-	padding: 15px !important;
+	height: 48px;
+	padding: 0 15px !important;
 }
 textarea{
 	width: 100%;
@@ -77,16 +84,18 @@ textarea{
 input[type="submit"]{
 	background-color: #a4cd39;
 	border: 1px solid #a4cd39;
+	font-size: 15px !important;
+	font-weight: 700 !important;
 	color: #fff;
 	padding: 10px 25px !important;
 }
-input[type="button"]{
-	padding: 10px 25px !important;
+input[type="button"],
+button{
+	color: #fff !important;	
+	font-weight: 700 !important;
+	padding: 10px 25px !important;	
 }
 .gform_wrapper.gf_browser_chrome input.button.gform_button_select_files {
-	padding: 10px 25px !important;
-}
-button{
 	padding: 10px 25px !important;
 }
 input[type="submit"]:hover{
@@ -113,56 +122,6 @@ input[type="submit"]:hover{
 	color: #a4cd39;	
 	box-shadow: none;	
 }
-.linkWrapper{
-	color: #a4cd39;
-	text-align: right;
-}
-.linkWrapper a{
-	color: #000;
-	margin-left: 10px;
-}
-.linkWrapper a.currentPage{
-	color: #a4cd39;
-}
-.linkWrapper a:hover{
-	color: #a4cd39;
-}
-table {
-	width: 100%;
-	border: none; 
-}
-table a{
-	color: #a4cd39;
-}
-table a.statusBtn{
-	cursor: pointer;
-}
-table tr:nth-of-type(odd) {
-	background-color: #f9fafb; 
-}
-table tr:first-of-type {
-	background-color: #ADB4BE; 
-}
-table tr:last-of-type td {
-	border: none; 
-}
-table tr th {
-	font-size: 14px;
-	font-weight: 700;
-	color: #ffffff;
-	padding-right: 20px; 
-}
-table tr th:last-child{
-	padding-right: 20px; 	
-}
-table tr td {
-	font-size: 14px;
-	font-weight: 400;
-	color: #2e333a;
-	border-bottom: 1px solid #000;
-	padding: 10px;
-	vertical-align: middle; 
-}
 .tml-form-table tr{
 	background-color: transparent !important; 
 	border-bottom: none;
@@ -173,7 +132,191 @@ table tr td {
 .tml-form-table tr td {
 	border-bottom: none;
 	padding: 0;
+	margin-bottom: 20px;
 }
-table .statusView{
-	display: none;
+.tml-form-table span.description{
+	font-size: 11px;
+}
+table .viewSts .statusView{
+	top: 30%;
+}
+table .viewSts .statusView .popUpDiv{
+	background-color: #fff;
+	text-align: left;
+	width: 500px;
+    margin: 0 auto;
+}
+table .viewSts .statusView .popUpDivInner{
+    margin: 0 auto;
+    padding: 50px;
+}
+table .viewSts .statusView .statusViewTitle{
+	font-size: 25px;
+	font-weight: 500;
+	color: #2e333a;	
+}
+table .viewSts .statusView .statusViewTitle p{
+	color: #ff0000;	
+	display: inline-block;
+    vertical-align: top;
+	margin: 0;
+	margin-left: 5px;
+}
+table .viewSts .statusView .statusViewTitle span{
+	color: #a4cd39;	
+	margin-left: 5px;
+}
+button.close{
+	color: #000 !important;
+	padding: 15px 20px !important;
+}
+body .gform_wrapper div.gform_body ul.gform_fields li.gfield.gfield_html{
+	font-size: 12px;
+	font-weight: 700;
+    color: #ff0000;
+} 
+.gform_wrapper.gf_browser_chrome .gfield_checkbox li input, .gform_wrapper.gf_browser_chrome .gfield_checkbox li input[type=checkbox], .gform_wrapper.gf_browser_chrome .gfield_radio li input[type=radio]{
+	margin-top: 0 !important;
+}
+.wrap {
+	padding: 0 !important;
+}
+.panel-content .wrap {
+	padding: 110px 0 !important;
+}
+.wrap .mainWrapper h1{
+	text-align: center;
+	margin-bottom: 30px;
+}
+.mainWrapper, 
+.bodyWrapper{
+	display: inline-block;
+	width: 100%;
+}
+.linkWrapper{
+	color: #a4cd39;
+	text-align: right;
+}
+.linkWrapper a{
+	color: #000;
+	margin-left: 10px;
+}
+.linkWrapper a:hover{
+	color: #a4cd39;
+	text-decoration: none;
+}
+.linkWrapper a:focus{
+	color: #a4cd39;
+	text-decoration: none;
+}
+.linkWrapper a.currentPage{
+	color: #a4cd39;
+}
+.dashboard table {
+	border: none; 
+	width: 100%;
+	min-height: .01%;
+    overflow-x: auto;
+	margin-bottom: 50px;
+}
+.dashboard table a{
+	color: #a4cd39;
+}
+.dashboard table a:hover{
+	color: #337ab7;
+}
+.dashboard table h6{
+	font-size: 12px;
+    font-weight: 700;
+	color: #a4cd39;
+	margin: 0;
+}
+.dashboard table ul{
+	margin: 0;
+}
+.dashboard table a.statusBtn{
+	font-size: 12px;
+    font-weight: 700;
+	cursor: pointer;
+}
+.dashboard table tr:nth-of-type(odd) {
+	background-color: #f9fafb; 
+}
+.dashboard table tr:first-of-type {
+	background-color: #ADB4BE; 
+}
+.dashboard table tr:last-of-type td {
+	border: none; 
+}
+.dashboard table tr th {
+	font-size: 14px;
+	font-weight: 700;
+	color: #ffffff;
+	padding: 10px 20px 10px 0;  
+}
+.dashboard table tr th:last-child{
+	text-align: right;
+	padding-right: 20px; 	
+}
+.dashboard table tr td:last-child{
+	text-align: right;
+	padding-right: 20px; 	
+}
+.dashboard table tr td {
+	font-size: 14px;
+	font-weight: 400;
+	color: #2e333a;
+	padding: 10px 20px 10px 0; 
+	vertical-align: middle; 
+}
+.your-profile .tml-submit-wrap{
+	margin: 0;
+}
+.your-profile #theme-my-login h3{
+	padding: 0;
+}
+.gform_wrapper input.datepicker.datepicker_with_icon{
+	margin-right: 8px !important;
+}
+.add-claim .gform_wrapper{
+	border: 1px solid #a4cd39;
+	max-width: 100%;
+    width: 500px;
+	padding: 25px;
+    margin: 0 auto;
+}
+.add-claim .gform_wrapper .gform_footer{
+	padding-bottom: 0;
+}
+.add-claim .gform_wrapper input[type="text"].datepicker {
+    width: 94% !important;
+}
+.add-claim .gform_wrapper input[type="text"],
+input[type="email"],
+input[type="password"],
+select{
+	width: 100% !important;
+}
+.add-claim .gform_wrapper ul.gform_fields li.gfield{
+	padding-right: 0;
+}
+.ui-datepicker-month,
+.ui-datepicker-year{
+	color:  #000;
+	width: auto !important;
+	height: auto;
+	padding: 0 !important;
+}
+.ui-datepicker tbody td:last-child{
+	padding-right: 0 !important;	
+}
+.gform_wrapper .validation_error{
+	color: #ff0000 !important;
+	border: 1px solid #ff0000 !important;
+	padding: 5px !important;
+}
+.gform_wrapper li.gfield.gfield_error{
+	background-color: transparent;
+	border: none;
+	padding: 0;
 }

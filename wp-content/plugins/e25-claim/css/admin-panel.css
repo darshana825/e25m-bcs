@@ -1,0 +1,8 @@
+/*Admin Panel*/
+#wpbody-content table a {
+	color: #a4cd39;
+	cursor: pointer;
+}
+#wpbody-content table a:hover {
+	color: #337ab7;
+}

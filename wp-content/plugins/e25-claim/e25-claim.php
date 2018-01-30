@@ -12,13 +12,65 @@
  */
 
 
+/*========================mobile api===================================================*/
+// get user
+
+function getUser( $data ) {
+	global $wpdb;
+
+	$user = $wpdb->get_row( "SELECT * FROM $wpdb->users WHERE user_email = '{$data['email']}'" );
+
+	
+
+	if($user){
+		$check = wp_check_password($data['password'], $user->user_pass, $user->ID);
+
+		if($check){
+			return new WP_REST_Response($user,200);
+		}else{
+			return new WP_REST_Response('Invalid password',400);
+		}
+	}else{
+		return new WP_REST_Response('No user',400);
+	}
+
+
+}
+
+add_action( 'rest_api_init', function () {
+  register_rest_route( 'claims/v1', '/user', array(
+    'methods' => 'GET',
+    'callback' => 'getUser',
+  ) );
+} );
+
+
+// get claims by user_id
+
+function getPostsByUserId( $data ) {
+	global $wpdb;
+
+  	$getClaims = $wpdb->get_results("SELECT * FROM add_claim WHERE uid = ".$data['id']);
+
+	return new WP_REST_Response($getClaims,200);
+}
+
+add_action( 'rest_api_init', function () {
+  register_rest_route( 'claims/v1', '/author', array(
+    'methods' => 'GET',
+    'callback' => 'getPostsByUserId',
+  ) );
+} );
+/*===================================================================================================*/
+
+
 if (!function_exists('wp_get_current_user')) {
     include(ABSPATH . "wp-includes/pluggable.php");
 }
 
 define('App_plugin__DIR', plugin_dir_path(__FILE__));
 
-//wp_enqueue_style( 'tfkapp-admin-style', plugins_url('css/tfk-admin-css.css',__FILE__));
+wp_enqueue_style( 'claim-admin-style', plugins_url('css/admin-panel.css',__FILE__));
 
 add_action('admin_menu', 'register_my_custom_menu_page');
 
@@ -88,7 +140,7 @@ function app_init() {
                 <td style="text-align:left"><?php echo $claim->date; ?></td>
                 <td style="text-align:left"><?php echo "LKR ".$claim->amount; ?></td>
                 <td style="text-align:left"><?php echo $claim->description; ?></td>
-                <td style="text-align:left"><?php echo $claim->type; ?></td>
+                <td style="text-align:left"><?php echo trim($claim->type,","); ?></td>
                 <td style="text-align:left"><?php echo $claim->project." (";  echo get_the_category( $customPostTitle->ID )[0]->name.")"; ?></td>
                 <td style="text-align:left"><?php echo $claim->others ?></td>
                 <td style="text-align:left">
@@ -103,8 +155,8 @@ function app_init() {
                 </td>
                 <td style="text-align:left">
                     <?php if($claim->status==4){ ?>
-                    <a class="appBtn">Approved</a>
-                    <a onclick="printDiv('printableArea')" >Print</a>
+                    <span class="appBtn">Approved</span>
+                    <a onclick="printDiv('printableArea')" class="printBtn" >Print</a>
                     <?php }else{ ?>
                     <a onclick="return confirm_approval('<?php echo $claim->id; ?>')" class="appBtn">Approve</a> 
                     <a onclick="return confirm_cancel('<?php echo $claim->id; ?>')" class="canBtn">Cancel</a>

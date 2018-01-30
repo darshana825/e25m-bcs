@@ -21,7 +21,9 @@
 
 
 <?php wp_head(); ?>
+<script type='text/javascript' src='<?php bloginfo("template_url"); ?>/assets/js/bootstrap.min.js'></script>
 <link rel="stylesheet" href="<?php bloginfo("template_url"); ?>/assets/css/dev-style.css">
+<link rel="stylesheet" href="<?php bloginfo("template_url"); ?>/assets/css/bootstrap.min.css">
 </head>
 
 <body <?php body_class(); ?>>

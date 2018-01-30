@@ -13,7 +13,7 @@ if ( is_user_logged_in() ) {
 
 get_header(); ?>
 
-<div class="wrap">
+<div class="wrap add-claim">
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
@@ -31,7 +31,7 @@ get_header(); ?>
                     
                     <div class="mainWrapper">
                         <div class="linkWrapper">
-                            Your Login as a <b><?php echo esc_html( $current_user->user_firstname ); ?></b> , <a href="<?php echo site_url('dashboard');?>">Dashboard</a>, <a href="<?php echo site_url('your-profile');?>">My Profile</a> , <a class="currentPage" href="<?php echo site_url('add-claim'); ?>">Apply Claim</a>, <a href="<?php echo site_url('logout');?>">Logout</a>
+                            Welcome <b><?php echo esc_html( $current_user->user_firstname ); ?></b> , <a href="<?php echo site_url('dashboard');?>">Dashboard</a>, <a href="<?php echo site_url('your-profile');?>">My Profile</a> , <a class="currentPage" href="<?php echo site_url('add-claim'); ?>">Apply Claim</a>, <a href="<?php echo site_url('logout');?>">Logout</a>
                         </div>
                         <h1>Add Claim</h1>
                         <div class="bodyWrapper">

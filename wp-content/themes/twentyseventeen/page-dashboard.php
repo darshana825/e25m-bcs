@@ -12,7 +12,7 @@ if ( is_user_logged_in() ) {
 
 get_header(); ?>
 
-<div class="wrap">
+<div class="wrap dashboard">
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
@@ -30,18 +30,18 @@ get_header(); ?>
                     
                     <div class="mainWrapper">
                         <div class="linkWrapper">
-                            Your Login as a <b><?php echo esc_html( $current_user->user_firstname ); ?></b> , <a class="currentPage" href="<?php echo site_url('dashboard');?>">Dashboard</a>, <a href="<?php echo site_url('your-profile');?>">My Profile</a> , <a href="<?php echo site_url('add-claim'); ?>">Apply Claim</a>, <a href="<?php echo site_url('logout');?>">Logout</a>
+                            Welcome <b><?php echo esc_html( $current_user->user_firstname ); ?></b> , <a class="currentPage" href="<?php echo site_url('dashboard');?>">Dashboard</a>, <a href="<?php echo site_url('your-profile');?>">My Profile</a> , <a href="<?php echo site_url('add-claim'); ?>">Apply Claim</a>, <a href="<?php echo site_url('logout');?>">Logout</a>
                         </div>
                         <h1>Dashboard</h1>
                         <div class="bodyWrapper">
                             <div>
-                                <h2>Pending Claim</h2>
-                                <table style="width:100%;">
+                                <h2>Pending Claim's</h2>
+                                <table>
                                     <tr>
                                         <th></th>
-                                        <th style="text-align:left;  height: 45px;">UserName</th>
-                                        <th style="text-align:left">User Email</th> 
-                                        <th style="text-align:left">Date</th>
+                                        <th>UserName</th>
+                                        <th>User Email</th> 
+                                        <th>Date</th>
                                         <th>Amount</th>
                                         <th>Description</th>
                                         <th>Type</th>
@@ -64,15 +64,15 @@ get_header(); ?>
                                     ?>
                                     <tr>
                                         <td><?php echo $i; ?>.)</td>
-                                        <td style="text-align:left; height:40px;"><?php echo $getUser->user_login; ?></td>
-                                        <td style="text-align:left"><?php echo $getUser->user_email; ?></td> 
-                                        <td style="text-align:left"><?php echo $claim->date; ?></td>
-                                        <td style="text-align:left"><?php echo "LKR ".$claim->amount; ?></td>
-                                        <td style="text-align:left"><?php echo $claim->description; ?></td>
-                                        <td style="text-align:left"><?php echo $claim->type; ?></td>
-                                        <td style="text-align:left"><?php echo $claim->project." (";  echo get_the_category( $customPostTitle->ID )[0]->name.")"; ?></td>
-                                        <td style="text-align:left"><?php echo $claim->others ?></td>
-                                        <td style="text-align:left">
+                                        <td><?php echo $getUser->user_login; ?></td>
+                                        <td><?php echo $getUser->user_email; ?></td> 
+                                        <td><?php echo $claim->date; ?></td>
+                                        <td><?php echo "LKR ".$claim->amount; ?></td>
+                                        <td><?php echo $claim->description; ?></td>
+                                        <td><?php echo trim($claim->type,","); ?></td>
+                                        <td><?php echo $claim->project." (";  echo get_the_category( $customPostTitle->ID )[0]->name.")"; ?></td>
+                                        <td><?php echo $claim->others ?></td>
+                                        <td>
                                             <ul>
                                                 <?php
                                                 $v=1;
@@ -82,7 +82,7 @@ get_header(); ?>
                                                   <?php $v++; } ?>
                                             </ul>
                                         </td>
-                                        <td style="text-align:left">
+                                        <td>
 					<div class="viewSts">
                                             <a class="statusBtn" data-target="#Modal_<?php echo $i; ?>" data-toggle="modal">View</a>
                                             <?php
@@ -90,19 +90,25 @@ get_header(); ?>
                                             $hodSts = "";
                                             $accSts = "";
                                             if($claim->status==1){
-                                                $pmSts = "Pending"; $hodSts="Pending"; $accSts="Pending";
+                                                $pmSts = "<p>Pending</p>"; $hodSts="<p>Pending</p>"; $accSts="<p>Pending</p>";
                                             }else if($claim->status==2){
-                                                $pmSts = "Approved"; $hodSts="Pending"; $accSts="Pending";
+                                                $pmSts = "<span>Approved</span>"; $hodSts="<p>Pending</p>"; $accSts="<p>Pending</p>";
                                             }else if($claim->status==3){
-                                                $pmSts = "Approved"; $hodSts="Approved"; $accSts="Pending";
+                                                $pmSts = "<span>Approved</span>"; $hodSts="<span>Approved</span>"; $accSts="<p>Pending</p>";
                                             }else if($claim->status==4){
-                                                $pmSts = "Approved"; $hodSts="Approved"; $accSts="Approved";
+                                                $pmSts = "<span>Approved</span>"; $hodSts="<span>Approved</span>"; $accSts="<span>Approved</span>";
                                             }
                                             ?>
+                                            
                                             <div class="statusView modal fade" id="Modal_<?php echo $i; ?>">
-                                                <div>Project Manager - <?php echo $pmSts; ?></div>
-                                                <div>Head of Delivery - <?php echo $hodSts; ?></div>
-                                                <div>Accountant - <?php echo $accSts; ?></div>
+                                                <div class="popUpDiv">
+                                                    <button type="button" class="close" data-dismiss="modal">X</button>
+                                                    <div class="popUpDivInner">
+                                                        <div class="statusViewTitle">Project Manager - <?php echo $pmSts; ?></div>
+                                                        <div class="statusViewTitle">Head of Delivery - <?php echo $hodSts; ?></div>
+                                                        <div class="statusViewTitle">Accountant - <?php echo $accSts; ?></div>
+                                                    </div>    
+                                                </div>
                                             </div>
 					</div>
                                         </td>
@@ -113,13 +119,13 @@ get_header(); ?>
                                 </table>
                             </div>
                             <div>
-                                <h2>Approved Claim</h2>
-                                <table style="width:100%;">
+                                <h2>Approved Claim's</h2>
+                                <table>
                                     <tr>
                                         <th></th>
-                                        <th style="text-align:left;  height: 45px;">UserName</th>
-                                        <th style="text-align:left">User Email</th> 
-                                        <th style="text-align:left">Date</th>
+                                        <th>UserName</th>
+                                        <th>User Email</th> 
+                                        <th>Date</th>
                                         <th>Amount</th>
                                         <th>Description</th>
                                         <th>Type</th>
@@ -142,15 +148,15 @@ get_header(); ?>
                                     ?>
                                     <tr>
                                         <td><?php echo $i; ?>.)</td>
-                                        <td style="text-align:left; height:40px;"><?php echo $getUser->user_login; ?></td>
-                                        <td style="text-align:left"><?php echo $getUser->user_email; ?></td> 
-                                        <td style="text-align:left"><?php echo $claim->date; ?></td>
-                                        <td style="text-align:left"><?php echo "LKR ".$claim->amount; ?></td>
-                                        <td style="text-align:left"><?php echo $claim->description; ?></td>
-                                        <td style="text-align:left"><?php echo $claim->type; ?></td>
-                                        <td style="text-align:left"><?php echo $claim->project." (";  echo get_the_category( $customPostTitle->ID )[0]->name.")"; ?></td>
-                                        <td style="text-align:left"><?php echo $claim->others ?></td>
-                                        <td style="text-align:left">
+                                        <td><?php echo $getUser->user_login; ?></td>
+                                        <td><?php echo $getUser->user_email; ?></td> 
+                                        <td><?php echo $claim->date; ?></td>
+                                        <td><?php echo "LKR ".$claim->amount; ?></td>
+                                        <td><?php echo $claim->description; ?></td>
+                                        <td><?php echo trim($claim->type,","); ?></td>
+                                        <td><?php echo $claim->project." (";  echo get_the_category( $customPostTitle->ID )[0]->name.")"; ?></td>
+                                        <td><?php echo $claim->others ?></td>
+                                        <td>
                                             <ul>
                                                 <?php
                                                 $v=1;
@@ -160,21 +166,22 @@ get_header(); ?>
                                                   <?php $v++; } ?>
                                             </ul>
                                         </td>
+                                        <td><h6>Approved</h6></td>
                                     </tr>
-                                    <td style="text-align:left"><a>Approved</a></td>
+                                    
                                     <?php $i++;
                                     }
                                     ?>
                                 </table>
                             </div>
                             <div>
-                                <h2>Canceled Claim</h2>
-                                <table style="width:100%;">
+                                <h2>Canceled Claim's</h2>
+                                <table>
                                     <tr>
                                         <th></th>
-                                        <th style="text-align:left;  height: 45px;">UserName</th>
-                                        <th style="text-align:left">User Email</th> 
-                                        <th style="text-align:left">Date</th>
+                                        <th>UserName</th>
+                                        <th>User Email</th> 
+                                        <th>Date</th>
                                         <th>Amount</th>
                                         <th>Description</th>
                                         <th>Type</th>
@@ -197,15 +204,15 @@ get_header(); ?>
                                     ?>
                                     <tr>
                                         <td><?php echo $i; ?>.)</td>
-                                        <td style="text-align:left; height:40px;"><?php echo $getUser->user_login; ?></td>
-                                        <td style="text-align:left"><?php echo $getUser->user_email; ?></td> 
-                                        <td style="text-align:left"><?php echo $claim->date; ?></td>
-                                        <td style="text-align:left"><?php echo "LKR ".$claim->amount; ?></td>
-                                        <td style="text-align:left"><?php echo $claim->description; ?></td>
-                                        <td style="text-align:left"><?php echo $claim->type; ?></td>
-                                        <td style="text-align:left"><?php echo $claim->project." (";  echo get_the_category( $customPostTitle->ID )[0]->name.")"; ?></td>
-                                        <td style="text-align:left"><?php echo $claim->others ?></td>
-                                        <td style="text-align:left">
+                                        <td><?php echo $getUser->user_login; ?></td>
+                                        <td><?php echo $getUser->user_email; ?></td> 
+                                        <td><?php echo $claim->date; ?></td>
+                                        <td><?php echo "LKR ".$claim->amount; ?></td>
+                                        <td><?php echo $claim->description; ?></td>
+                                        <td><?php echo trim($claim->type,","); ?></td>
+                                        <td><?php echo $claim->project." (";  echo get_the_category( $customPostTitle->ID )[0]->name.")"; ?></td>
+                                        <td><?php echo $claim->others ?></td>
+                                        <td>
                                             <ul>
                                                 <?php
                                                 $v=1;
@@ -215,7 +222,7 @@ get_header(); ?>
                                                   <?php $v++; } ?>
                                             </ul>
                                         </td>
-                                        <td style="text-align:left"><a>Cancelled</a></td>
+                                        <td><h6>Cancelled</h6></td>
                                     </tr>
                                     <?php $i++;
                                     }

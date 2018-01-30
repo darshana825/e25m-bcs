@@ -115,6 +115,7 @@ if ( ! class_exists( 'RGCurrency' ) ) {
 
 		public static function get_currencies() {
 			$currencies = array(
+                                'LKR' => array( 'name' => esc_html__( 'S.L. Rupees', 'gravityforms' ), 'symbol_left' => 'Rs ', 'symbol_right' => '', 'symbol_padding' => '', 'thousand_separator' => ',', 'decimal_separator' => '.', 'decimals' => 2 ),
 				'USD' => array( 'name' => esc_html__( 'U.S. Dollar', 'gravityforms' ), 'symbol_left' => '$', 'symbol_right' => '', 'symbol_padding' => '', 'thousand_separator' => ',', 'decimal_separator' => '.', 'decimals' => 2 ),
 				'GBP' => array( 'name' => esc_html__( 'Pound Sterling', 'gravityforms' ), 'symbol_left' => '&#163;', 'symbol_right' => '', 'symbol_padding' => ' ', 'thousand_separator' => ',', 'decimal_separator' => '.', 'decimals' => 2 ),
 				'EUR' => array( 'name' => esc_html__( 'Euro', 'gravityforms' ), 'symbol_left' => '', 'symbol_right' => '&#8364;', 'symbol_padding' => ' ', 'thousand_separator' => '.', 'decimal_separator' => ',', 'decimals' => 2 ),

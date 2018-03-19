@@ -175,7 +175,7 @@ get_header(); ?>
                                 </table>
                             </div>
                             <div>
-                                <h2>Canceled Claim's</h2>
+                                <h2>Cancelled Claim's</h2>
                                 <table>
                                     <tr>
                                         <th></th>

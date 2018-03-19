@@ -1,8 +1,89 @@
 /*Admin Panel*/
-#wpbody-content table a {
+a:focus{
+	outline: none;
+	box-shadow: none;
+}
+.toplevel_page_claim-plugin #wpcontent{
+	margin-left: 140px !important;
+}
+.toplevel_page_claim-plugin #wpbody-content table a {
 	color: #a4cd39;
 	cursor: pointer;
 }
-#wpbody-content table a:hover {
-	color: #337ab7;
+.toplevel_page_claim-plugin #wpbody-content table a:hover {
+	color: #000;
+}
+.toplevel_page_claim-plugin #wpbody-content table ul{
+	margin: 0;
+}
+.toplevel_page_claim-plugin #wpbody-content table thead tr{
+	background-color: #a4cd39; 
+}
+.toplevel_page_claim-plugin #wpbody-content table thead tr th {
+	font-size: 14px;
+	font-weight: 700;
+	color: #000;
+	text-align: center !important;
+}
+.toplevel_page_claim-plugin #wpbody-content table tbody tr td {
+	text-align: center !important;
+}
+.toplevel_page_claim-plugin #wpbody-content table tr:nth-of-type(even) {
+	background-color: #e2e5e8; 
+	border-bottom: 1px solid #eee;
+}
+.toplevel_page_claim-plugin #wpbody-content table tbody tr td .appBtn{
+	font-weight: 700;
+	color: #0ceac3;
+    display: block;
+    margin-bottom: 2px;
+}
+.toplevel_page_claim-plugin #wpbody-content table tbody tr td a.appBtn{
+	font-weight: 700;
+	color: #0b50ef;
+    display: block;
+    margin-bottom: 2px;
+}
+.toplevel_page_claim-plugin #wpbody-content table tbody tr td a.appBtn:hover {
+	color: #000;
+}
+.toplevel_page_claim-plugin #wpbody-content table tbody tr td a.printBtn{
+	font-weight: 700;
+}
+.toplevel_page_claim-plugin #wpbody-content table tbody tr td a.canBtn{
+	font-weight: 700;
+	color: #ff0000; 
+}
+.toplevel_page_claim-plugin #wpbody-content table tbody tr td a.canBtn:hover {
+	color: #000;
+}
+.users-php #wpbody-content table td.email.column-email a {
+	color: #a4cd39;
+	cursor: pointer;
+}
+.users-php #wpbody-content table td.email.column-email a:hover {
+	color: #000;
+}
+.users-php #wpbody-content table thead tr{
+	background-color: #a4cd39; 
+}
+.users-php #wpbody-content table tfoot tr{
+	background-color: #a4cd39; 
+}
+.users-php #wpbody-content table tr:nth-of-type(even) {
+	background-color: #e2e5e8; 
+	border-bottom: 1px solid #eee;
+}
+.users-php #wpbody-content table thead tr th {
+	font-size: 14px;
+	font-weight: 700;
+	color: #000;
+}
+.users-php #wpbody-content table tfoot tr th {
+	font-size: 14px;
+	font-weight: 700;
+	color: #000;
+}
+th.sortable a span, th.sorted a span{
+	color: #000;
 }

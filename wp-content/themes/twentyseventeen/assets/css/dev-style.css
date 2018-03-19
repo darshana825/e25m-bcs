@@ -116,11 +116,18 @@ input[type="submit"]:hover{
 	text-align: center;
 }
 #theme-my-login .tml-action-links li a{
+	background-color: #a4cd39;
+	border: 1px solid #a4cd39;
 	box-shadow: none;
+	font-size: 15px !important;
+	font-weight: 700 !important;
+	color: #fff;
+	padding: 10px 25px !important;
 }
 #theme-my-login .tml-action-links li a:hover{
-	color: #a4cd39;	
+	background-color: #fff;
 	box-shadow: none;	
+	color: #a4cd39;	
 }
 .tml-form-table tr{
 	background-color: transparent !important; 
@@ -138,7 +145,7 @@ input[type="submit"]:hover{
 	font-size: 11px;
 }
 table .viewSts .statusView{
-	top: 30%;
+	top: 35%;
 }
 table .viewSts .statusView .popUpDiv{
 	background-color: #fff;
@@ -193,11 +200,14 @@ body .gform_wrapper div.gform_body ul.gform_fields li.gfield.gfield_html{
 	display: inline-block;
 	width: 100%;
 }
-.linkWrapper{
-	color: #a4cd39;
+.linkWrapper {
 	text-align: right;
 }
+.linkWrapper b{
+	color: #a4cd39;
+}
 .linkWrapper a{
+	font-weight: 700;
 	color: #000;
 	margin-left: 10px;
 }
@@ -240,7 +250,7 @@ body .gform_wrapper div.gform_body ul.gform_fields li.gfield.gfield_html{
 	cursor: pointer;
 }
 .dashboard table tr:nth-of-type(odd) {
-	background-color: #f9fafb; 
+	background-color: #e2e5e8; 
 }
 .dashboard table tr:first-of-type {
 	background-color: #ADB4BE; 
@@ -250,13 +260,19 @@ body .gform_wrapper div.gform_body ul.gform_fields li.gfield.gfield_html{
 }
 .dashboard table tr th {
 	font-size: 14px;
-	font-weight: 700;
+	font-weight: 400;
 	color: #ffffff;
-	padding: 10px 20px 10px 0;  
+	padding: 10px 20px 10px 0;
+	text-align: center;
 }
-.dashboard table tr th:last-child{
+.dashboard table tr th:last-child{ 
 	text-align: right;
 	padding-right: 20px; 	
+}
+.dashboard table tr td:first-child{
+	text-align: left;
+	padding: 0;
+	padding-left: 20px; 	
 }
 .dashboard table tr td:last-child{
 	text-align: right;
@@ -266,8 +282,8 @@ body .gform_wrapper div.gform_body ul.gform_fields li.gfield.gfield_html{
 	font-size: 14px;
 	font-weight: 400;
 	color: #2e333a;
-	padding: 10px 20px 10px 0; 
-	vertical-align: middle; 
+	padding: 10px 20px 10px 0;
+	text-align: center;
 }
 .your-profile .tml-submit-wrap{
 	margin: 0;
@@ -310,6 +326,22 @@ select{
 .ui-datepicker tbody td:last-child{
 	padding-right: 0 !important;	
 }
+.gform_wrapper li.gfield.gfield_error.gfield_contains_required div.ginput_container{
+	margin-top: 8px !important;
+}
+.gform_wrapper li label{
+	color: #000 !important;
+}
+.gform_wrapper li label span{
+	color: #ff0000 !important;
+}
+.gform_wrapper li.gfield.gfield_error label{
+	color: #000 !important;
+}
+.gform_wrapper .field_description_below .gfield_description{
+	color: #ff0000 !important;
+	padding-top: 5px !important;
+}
 .gform_wrapper .validation_error{
 	color: #ff0000 !important;
 	border: 1px solid #ff0000 !important;
@@ -319,4 +351,14 @@ select{
 	background-color: transparent;
 	border: none;
 	padding: 0;
+}
+.gform_wrapper li.gfield.gfield_error input[type="text"],
+input[type="email"]{
+	border: 1px solid #ff0000 !important;
+}
+.gform_wrapper .gform_fileupload_multifile .gform_drop_area{
+	margin-bottom: 0 !important;
+}
+.gform_wrapper textarea{
+	padding: 15px !important;
 }
